@@ -1,0 +1,1 @@
+grep -i "define service " objects.cache -A 4 | grep -i host_name -A 3 | grep -i kfh -A 3 | grep -i "service_description\|check_command\|host_name\|--" | awk '/--/{if (x)print x;x="";next}{x=(!x)?$0:x" "$0;}END{print x;}' | sed 's/host_name//g' | sed -e 's/service_description//g' | sed -e 's/check_command//g' | sed -e 's/[[:space:]]\{2,\}/\ /g' | sed -e 's/^[ \t]*//'

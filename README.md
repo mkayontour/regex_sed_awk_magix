@@ -7,12 +7,12 @@ Do some multiline magic and bring those into one line.
 cat multiline_file
 --
   name ich
-  info dumm
+  info langsam
   platz 2
 
 --
   name du
-  info langsam
+  info schnell
   platz 1
 ```
 
@@ -57,6 +57,31 @@ Result:
 ```
 check_test
 ```
+#### Remove fields from row
+```
+row1;row2;row3;row4
+```
+Use:
+```
+echo "row1;row2;row3;row4" | awk -F ";" '{$2=$4=""; print}'
+```
+Result:
+```
+row1  row3
+```
+
+Can be done much easier if using cut
+```
+echo "row1;row2;row3;row4" | cut -d ";" -f-1,3
+```
+Result:
+```
+row1;row3
+```
+#### Remove whitespace from end of line
+```
+echo "whitespace at endline " |awk 'sub(/ *$/, "")'
+```
 
 ## SED
 
@@ -78,5 +103,6 @@ Result:
 Hallo World
 This is Text with tabs and spaces
 ```
+
 
 #### more
