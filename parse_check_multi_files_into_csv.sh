@@ -14,10 +14,10 @@ fi
 if [[ $2 == "gen" ]];
 then
   for h in `find $HOSTLOCATION -name *.cmd`
-    do 
+    do
       grep -H "^command\| command" $h | grep -v "$excludes" | awk -F " " '{$2=$4=""; print $0}' | awk '{gsub(":command","");print}' | awk '{gsub("'$HOSTLOCATION/'","");print}' | awk '{gsub("=/","/");print}' | awk '{gsub("= /","/");print}' | sed -e 's/[[:space:]]\{2,\}/\;/g' | sed -e 's/\(libexec\/\)[A-Za-z0-9\-\_\.]*/&;/g' | sed 's/\.cmd//g' | awk 'BEGIN{FS=";";OFS=FS} {base=$1;gsub(/.*\//,"",base);print base,$0}' | cut -d ";"  -f-1,3- | sed -e 's/srv-//g' | awk 'sub(/ *$/, "")' | sed -e 's/;$//g' | tee -a $tmp
       #| awk '{gsub("/check_nt ","/check_nt;");print}' > $file
-    done 
+    done
   fi
 
 if [[ -e $tmp ]];
@@ -75,7 +75,5 @@ fi
 #      critical=$(echo $last | egrep -o '(-c).\d+' | sed 's/-c //g')
 #      params=$(echo $last | egrep -o "(-l).([\"\'A-Za-z0-9\-\_\.].*[\"\']|[\"\'A-Za-z0-9\-\_\.]*)" | sed 's/-l //g')
 #      echo "$hostname;$servicename;$module;$port;$secret;$warning;$critical;$params;"
-#
-       echo "$hostname;$servicename;$checkcommand;$last"
-    done
 
+    done
